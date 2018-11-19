@@ -1,9 +1,10 @@
-DROP TABLE recruits_from;
-DROP TABLE degree_offered;
-DROP TABLE agents;
-DROP TABLE country;
-DROP TABLE degree;
-DROP TABLE university;
+-- Remove 
+DROP TABLE IF EXISTS recruits_from;
+DROP TABLE IF EXISTS degree_offered;
+DROP TABLE IF EXISTS agents;
+DROP TABLE IF EXISTS country;
+DROP TABLE IF EXISTS degree;
+DROP TABLE IF EXISTS university;
 
 CREATE TABLE university (
     name    VARCHAR,
@@ -67,6 +68,9 @@ CREATE TABLE recruits_from (
 \copy degree_offered FROM 'tables/degree_offered.csv' WITH (FORMAT csv);
 \copy agents FROM 'tables/agents.csv' WITH (FORMAT csv);
 \copy recruits_from FROM 'tables/recruits_from.csv' WITH (FORMAT csv);
+
+
+-- Removes column names from data
 
 DELETE FROM recruits_from WHERE uid = 'uid';
 DELETE FROM degree_offered WHERE uid = 'uid';

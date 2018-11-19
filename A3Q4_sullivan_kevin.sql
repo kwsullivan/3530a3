@@ -7,17 +7,22 @@ the report, for each University in this report, you must add a new row to a tabl
 recruit_stats. For example, <‘Guelph’, 1488, 3> is added for University of Guelph.
 */
 
-CREATE OR REPLACE FUNCTION (input INTEGER)
-RETURNS VARCHAR
+CREATE OR REPLACE FUNCTION printReports()
+RETURNS void
 AS
 $$
 DECLARE
-
+    c1 CURSOR IS SELECT uid FROM university ORDER BY uid ASC;
 BEGIN
+    FOR i in c1 LOOP
+    RAISE NOTICE 'UID: %', i. uid;
+    END LOOP;
 
 END
 $$
 LANGUAGE plpgsql;
+
+SELECT printReports();
 
 
 
