@@ -1,3 +1,12 @@
+SET search_path to a3;
+
+DROP TABLE recruits_from;
+DROP TABLE degree_offered;
+DROP TABLE country;
+DROP TABLE agents;
+DROP TABLE degree;
+DROP TABLE university;
+
 CREATE TABLE university (
     name    VARCHAR,
     uid     VARCHAR NOT NULL,
@@ -56,12 +65,29 @@ CREATE TABLE recruits_from (
 
 \copy university FROM '/tables/university.csv' WITH (FORMAT csv);
 
+DELETE FROM university WHERE uid = 'uid';
+
+
 \copy degree FROM '/tables/degree.csv' WITH (FORMAT csv);
+
+DELETE FROM degree WHERE did = 'did';
+
 
 \copy country FROM '/tables/country.csv' WITH (FORMAT csv);
 
+DELETE FROM country WHERE cid = 'cid';
+
+
 \copy degree_offered FROM '/tables/degree_offered.csv' WITH (FORMAT csv);
+
+DELETE FROM degree_offered WHERE uid = 'uid';
+
 
 \copy agents FROM '/tables/agents.csv' WITH (FORMAT csv);
 
+DELETE FROM agents WHERE aid = 'aid';
+
+
 \copy recruits_from FROM '/tables/recruits_from.csv' WITH (FORMAT csv);
+
+DELETE FROM recruits_from WHERE uid = 'uid';
