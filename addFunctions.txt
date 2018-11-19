@@ -1,0 +1,11 @@
+drop schema a3 cascade;
+create schema a3;
+set search_path to a3;
+\i createTables.sql
+\i A3Q1_sullivan_kevin.sql
+\i A3Q2_sullivan_kevin.sql
+\i A3Q3_sullivan_kevin.sql
+\i A3Q4_sullivan_kevin.sql
+\i A3Q5a_sullivan_kevin.sql
+\i A3Q5b_sullivan_kevin.sql
+\i A3Bonus_sullivan_kevin.sql

@@ -9,12 +9,12 @@ possible login ids for the person by using combinations of first name, lastname,
 the sun sign of the person and stores this list in the table POSSIBLE_IDS.
 */
 
-DROP TABLE IF EXISTS POSSIBLE_IDS;
-
 CREATE TABLE IF NOT EXISTS POSSIBLE_IDS (
     ID  VARCHAR(60),
     PRIMARY KEY (ID)
 );
+
+DELETE FROM TABLE POSSIBLE_IDS;
 
 CREATE OR REPLACE FUNCTION generate_id (firstName VARCHAR, lastName VARCHAR, dateOfBirth VARCHAR)
 RETURNS void
