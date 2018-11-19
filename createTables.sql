@@ -2,8 +2,8 @@ SET search_path to a3;
 
 DROP TABLE recruits_from;
 DROP TABLE degree_offered;
-DROP TABLE country;
 DROP TABLE agents;
+DROP TABLE country;
 DROP TABLE degree;
 DROP TABLE university;
 
