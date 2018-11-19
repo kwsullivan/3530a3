@@ -14,8 +14,6 @@ CREATE TABLE IF NOT EXISTS POSSIBLE_IDS (
     PRIMARY KEY (ID)
 );
 
-DELETE FROM POSSIBLE_IDS;
-
 CREATE OR REPLACE FUNCTION generate_id (firstName VARCHAR, lastName VARCHAR, dateOfBirth VARCHAR)
 RETURNS void
 AS
@@ -33,6 +31,7 @@ BEGIN
     SELECT(date_part('year', age(current_date, CAST(dateOfBirth AS TIMESTAMP)))) INTO age;
     SELECT EXTRACT (MONTH FROM CAST(dateOfBirth AS TIMESTAMP)) INTO monthBorn;
     SELECT EXTRACT (DAY FROM CAST(dateOfBirth AS TIMESTAMP)) INTO dayBorn;
+    DELETE FROM POSSIBLE_IDS;
 
     CASE
         WHEN monthBorn = 1  THEN -- January
