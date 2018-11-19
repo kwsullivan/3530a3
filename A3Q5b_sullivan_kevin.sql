@@ -34,11 +34,6 @@ END
 $$
 LANGUAGE plpgsql;
 
-UPDATE university SET url = 'kevin.com' WHERE uid = '100';
-
-DROP trigger notify_for_url ON university;
-
-
 CREATE TRIGGER notify_for_url
 BEFORE UPDATE OF url ON university
 FOR EACH ROW
