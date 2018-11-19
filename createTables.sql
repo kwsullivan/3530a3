@@ -1,5 +1,3 @@
-SET search_path to a3;
-
 DROP TABLE recruits_from;
 DROP TABLE degree_offered;
 DROP TABLE agents;
@@ -63,31 +61,16 @@ CREATE TABLE recruits_from (
 
 -- Copy CSV files into corresponding tables
 
-\copy university FROM '/tables/university.csv' WITH (FORMAT csv);
-
-DELETE FROM university WHERE uid = 'uid';
-
-
-\copy degree FROM '/tables/degree.csv' WITH (FORMAT csv);
-
-DELETE FROM degree WHERE did = 'did';
-
-
-\copy country FROM '/tables/country.csv' WITH (FORMAT csv);
-
-DELETE FROM country WHERE cid = 'cid';
-
-
-\copy degree_offered FROM '/tables/degree_offered.csv' WITH (FORMAT csv);
-
-DELETE FROM degree_offered WHERE uid = 'uid';
-
-
-\copy agents FROM '/tables/agents.csv' WITH (FORMAT csv);
-
-DELETE FROM agents WHERE aid = 'aid';
-
-
-\copy recruits_from FROM '/tables/recruits_from.csv' WITH (FORMAT csv);
+\copy university FROM 'tables/university.csv' WITH (FORMAT csv);
+\copy degree FROM 'tables/degree.csv' WITH (FORMAT csv);
+\copy country FROM 'tables/country.csv' WITH (FORMAT csv);
+\copy degree_offered FROM 'tables/degree_offered.csv' WITH (FORMAT csv);
+\copy agents FROM 'tables/agents.csv' WITH (FORMAT csv);
+\copy recruits_from FROM 'tables/recruits_from.csv' WITH (FORMAT csv);
 
 DELETE FROM recruits_from WHERE uid = 'uid';
+DELETE FROM degree_offered WHERE uid = 'uid';
+DELETE FROM agents WHERE aid = 'aid';
+DELETE FROM country WHERE cid = 'cid';
+DELETE FROM degree WHERE did = 'did';
+DELETE FROM university WHERE uid = 'uid';
