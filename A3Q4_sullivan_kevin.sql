@@ -7,20 +7,35 @@ the report, for each University in this report, you must add a new row to a tabl
 recruit_stats. For example, <‘Guelph’, 1488, 3> is added for University of Guelph.
 */
 
+DROP TABLE IF EXISTS recruit_stats;
+
+CREATE TABLE IF NOT EXISTS recruit_stats (
+    university          VARCHAR NOT NULL,
+    numRecruited        INTEGER,
+    NumDegreesOffered   INTEGER,
+    PRIMARY KEY (university)
+);
+
 CREATE OR REPLACE FUNCTION printReports()
 RETURNS void
 AS
 $$
 DECLARE
-    c1 CURSOR IS SELECT uid FROM university ORDER BY uid ASC;
+    c1 CURSOR IS SELECT name, uid FROM university ORDER BY uid ASC;
     recruited REFCURSOR;
     degrees REFCURSOR;
     currRecord RECORD;
-    correctedName VARCHAR;
-    totalStudents INTEGER;
+
+    correctedUniName        VARCHAR;
+    totalStudents           INTEGER;
+    totalDegrees            INTEGER;
+
+    correctedCountryName    VARCHAR;
 BEGIN
     FOR i IN c1 LOOP
-    totalStudents := 0;
+    totalStudents   := 0;
+    totalDegrees    := 0;
+    SELECT INITCAP(i.name) INTO correctedUniName;
     RAISE NOTICE E'************************\n';
     --RAISE NOTICE 'UID: %', i. uid;
 
@@ -51,8 +66,8 @@ BEGIN
             FETCH NEXT FROM recruited INTO currRecord;
             EXIT WHEN currRecord IS NULL;
 
-            SELECT INITCAP(currRecord.name) INTO correctedName; -- Convert name from 'NAME' to 'name'
-            RAISE NOTICE '% students from %', currRecord.numstudents, correctedName;
+            SELECT INITCAP(currRecord.name) INTO correctedCountryName; -- Convert name from 'NAME' to 'name'
+            RAISE NOTICE '% students from %', currRecord.numstudents, correctedCountryName;
             totalStudents := totalStudents + CAST(currRecord.numstudents AS INTEGER);
         END LOOP;
 
@@ -71,31 +86,12 @@ BEGIN
             EXIT WHEN currRecord IS NULL;
             RAISE NOTICE '%', currRecord.name;
         END LOOP;
-        
+        SELECT COUNT(*) INTO totalDegrees FROM degree_offered WHERE uid = i.uid;
         CLOSE degrees;
+
+        INSERT INTO recruit_stats VALUES (correctedUniName, totalStudents, totalDegrees);
+        --RAISE NOTICE '% % %', correctedUniName, totalStudents, totalDegrees;
     END LOOP;
 END
 $$
 LANGUAGE plpgsql;
-
-SELECT printReports();
-
-
-
-CREATE TABLE IF NOT EXISTS recruit_stats (
-    university          VARCHAR NOT NULL,
-    numRecruited        INTEGER,
-    NumDegreesOffered   INTEGER,
-    PRIMARY KEY (university)
-);
-
-SELECT name FROM degree natural join degree_offered WHERE uid = '100';
-SELECT name FROM degree natural join degree_offered WHERE uid = '200';
-SELECT name FROM degree natural join degree_offered WHERE uid = '300';
-SELECT name FROM degree natural join degree_offered WHERE uid = '400';
-SELECT name FROM degree natural join degree_offered WHERE uid = '500';
-SELECT name FROM degree natural join degree_offered WHERE uid = '600';
-
-SELECT name FROM
-                            degree natural join degree_offered
-                            WHERE uid = i.uid;
