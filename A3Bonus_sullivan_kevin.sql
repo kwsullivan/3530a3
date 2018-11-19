@@ -8,6 +8,7 @@ last name and date of birth of an employee (stored as VARCHAR), and generates a 
 possible login ids for the person by using combinations of first name, lastname, age and
 the sun sign of the person and stores this list in the table POSSIBLE_IDS.
 */
+
 DROP TABLE IF EXISTS POSSIBLE_IDS;
 
 CREATE TABLE IF NOT EXISTS POSSIBLE_IDS (
@@ -15,9 +16,10 @@ CREATE TABLE IF NOT EXISTS POSSIBLE_IDS (
     PRIMARY KEY (ID)
 );
 
-CREATE OR REPLACE FUNCTION generate_id(firstName VARCHAR, lastName VARCHAR, dateOfBirth VARCHAR)
+CREATE OR REPLACE FUNCTION generate_id (firstName VARCHAR, lastName VARCHAR, dateOfBirth VARCHAR)
 RETURNS void
-AS $$
+AS
+$$
 DECLARE
     generated_id    VARCHAR(60);
     starPath        VARCHAR;
@@ -28,9 +30,10 @@ DECLARE
 BEGIN
     firstName := INITCAP(firstName);
     lastName := INITCAP(lastName);
-    SELECT(date_part('year', age(current_date, dateOfBirth))) INTO age;
-    SELECT EXTRACT (MONTH FROM dateOfBirth) INTO monthBorn;
-    SELECT EXTRACT (DAY FROM dateOfBirth) INTO dayBorn;
+    SELECT(date_part('year', age(current_date, CAST(dateOfBirth AS TIMESTAMP)))) INTO age;
+    SELECT EXTRACT (MONTH FROM CAST(dateOfBirth AS TIMESTAMP)) INTO monthBorn;
+    SELECT EXTRACT (DAY FROM CAST(dateOfBirth AS TIMESTAMP)) INTO dayBorn;
+
     CASE
         WHEN monthBorn = 1  THEN -- January
             IF dayBorn <= 20 THEN
@@ -105,8 +108,7 @@ BEGIN
                 starPath := 'Capricorn';
             END IF;
     END CASE;
-
--- firstName_lastName *****************************************************
+        -- firstName_lastName *****************************************************
     generated_id := firstName || '_' || lastName;
     INSERT INTO POSSIBLE_IDS VALUES (generated_id);
     --RAISE NOTICE '%', generated_id;
@@ -141,3 +143,13 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+
+
+
+
+
+
+
+
