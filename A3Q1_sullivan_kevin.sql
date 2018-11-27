@@ -9,7 +9,7 @@ AS
 $$
 DECLARE
     upperName VARCHAR;
-    matchUID VARCHAR;
+    matchUID INTEGER;
     numberagents INTEGER;
 BEGIN
     SELECT UPPER(uniName) INTO upperName FROM university;

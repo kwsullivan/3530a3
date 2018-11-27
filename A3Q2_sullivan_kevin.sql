@@ -14,7 +14,7 @@ $$
 DECLARE
     max_commission VARCHAR;
     num_rows INTEGER;
-    agentID VARCHAR;
+    agentID INTEGER;
     c1 CURSOR IS SELECT aid, fname, lname FROM agents;
 BEGIN
     agentID := CAST (input AS VARCHAR);
@@ -25,9 +25,7 @@ BEGIN
     ELSE
         RAISE NOTICE 'Invalid agent id. Valid agent ids are:';
         FOR i in c1 LOOP
-            IF i.aid != 'aid' THEN
-                RAISE NOTICE '%: % %', i.aid, i.fname, i.lname;
-            END IF;
+            RAISE NOTICE '%: % %', i.aid, i.fname, i.lname;
         END LOOP;
         RAISE EXCEPTION 'Invalid agent id';
     END IF;

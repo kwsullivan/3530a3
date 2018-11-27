@@ -12,12 +12,12 @@ RETURNS VARCHAR
 AS
 $$
 DECLARE
-    agentID VARCHAR:= CAST (input AS VARCHAR);
+    agentID INTEGER:= input;
     num_rows INTEGER;
     
     newEmail VARCHAR;
     c1 CURSOR IS SELECT * FROM agents WHERE aid = agentID;
-    c2 CURSOR IS SELECT aid, fname, lname FROM agents ORDER BY aid AS INTEGER;
+    c2 CURSOR IS SELECT aid, fname, lname FROM agents ORDER BY aid ASC;
     fname VARCHAR;
     lname VARCHAR;
     country VARCHAR;
@@ -31,7 +31,7 @@ BEGIN
         SELECT LOWER(i.fname) INTO fname;
         SELECT LOWER(i.lname) INTO lname;
         SELECT LOWER(i.resides_in_city) INTO country;
-        
+
         IF i.uid = '100' THEN
             domain := 'uoguelph';
         END IF;
