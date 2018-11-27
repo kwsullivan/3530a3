@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS university;
 
 CREATE TABLE university (
     name    VARCHAR,
-    uid     VARCHAR NOT NULL,
+    uid     INTEGER NOT NULL,
     city    VARCHAR,
     state   VARCHAR,
     url     VARCHAR,
@@ -18,19 +18,19 @@ CREATE TABLE university (
 CREATE TABLE degree (
     name    VARCHAR,
     type    VARCHAR,
-    did     VARCHAR NOT NULL,
+    did     INTEGER NOT NULL,
     PRIMARY KEY (did)
 );
 
 CREATE TABLE country (
     name    VARCHAR,
-    cid     VARCHAR NOT NULL,
+    cid     INTEGER NOT NULL,
     PRIMARY KEY (cid)
 );
 
 CREATE TABLE degree_offered (
-    uid     VARCHAR NOT NULL,
-    did     VARCHAR NOT NULL,
+    uid     INTEGER NOT NULL,
+    did     INTEGER NOT NULL,
     PRIMARY KEY (uid, did),
     FOREIGN KEY (uid) REFERENCES university (uid),
     FOREIGN KEY (did) REFERENCES degree (did)
@@ -39,22 +39,22 @@ CREATE TABLE degree_offered (
 CREATE TABLE agents (
     fname   VARCHAR,
     lname   VARCHAR,
-    aid     VARCHAR,
+    aid     INTEGER,
     phone   VARCHAR,
     email   VARCHAR,
     commission  VARCHAR,
     resides_in_city VARCHAR,
-    cid     VARCHAR,
-    uid     VARCHAR,
+    cid     INTEGER,
+    uid     INTEGER,
     PRIMARY KEY (aid),
     FOREIGN KEY (uid) REFERENCES university (uid),
     FOREIGN KEY (cid) REFERENCES country (cid)
 );
 
 CREATE TABLE recruits_from (
-    uid             VARCHAR NOT NULL,
-    cid             VARCHAR NOT NULL,
-    numstudents     VARCHAR,
+    uid             INTEGER NOT NULL,
+    cid             INTEGER NOT NULL,
+    numstudents     INTEGER,
     PRIMARY KEY (uid, cid),
     FOREIGN KEY (uid) REFERENCES university (uid),
     FOREIGN KEY (cid) REFERENCES country (cid)

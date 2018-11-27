@@ -17,7 +17,7 @@ DECLARE
     
     newEmail VARCHAR;
     c1 CURSOR IS SELECT * FROM agents WHERE aid = agentID;
-    c2 CURSOR IS SELECT aid, fname, lname FROM agents;
+    c2 CURSOR IS SELECT aid, fname, lname FROM agents ORDER BY aid AS INTEGER;
     fname VARCHAR;
     lname VARCHAR;
     country VARCHAR;
@@ -57,9 +57,7 @@ BEGIN
     ELSE
         RAISE NOTICE 'Invalid agent id. Valid agent ids are:';
         FOR i in c2 LOOP
-            IF i.aid != 'aid' THEN
-                RAISE NOTICE '%: % %', i.aid, i.fname, i.lname;
-            END IF;
+            RAISE NOTICE '%: % %', i.aid, i.fname, i.lname;
         END LOOP;
         RAISE EXCEPTION 'Invalid agent id';
     END IF;
